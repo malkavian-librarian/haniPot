@@ -1,0 +1,15 @@
+import {mkdir,open,readFile,rename,lstat,unlink,writeFile} from 'node:fs/promises';
+import {resolve,join} from 'node:path';
+import {randomUUID,randomBytes} from 'node:crypto';
+import {hostname} from 'node:os';
+import type {Clock} from '../contracts.js';
+import {generateWorld,validateWorld} from './generate.js';
+import type {World} from './types.js';
+async function ensureDir(dir:string){await mkdir(dir,{recursive:true});if((await lstat(dir)).isSymbolicLink())throw Error('data directory cannot be a symlink');}
+async function safeRead(path:string){if((await lstat(path)).isSymbolicLink())throw Error('refusing symbolic link');return readFile(path,'utf8');}
+async function save(dir:string,world:World){const path=join(dir,'world.json');try{if((await lstat(path)).isSymbolicLink())throw Error('refusing symbolic link');}catch(e){if((e as NodeJS.ErrnoException).code!=='ENOENT')throw e;}
+ const temp=join(dir,`world-${randomUUID()}.tmp`);const handle=await open(temp,'wx',0o600);try{await handle.writeFile(JSON.stringify(world));await handle.sync();}finally{await handle.close();}await rename(temp,path);}
+export async function loadOrCreateWorld(dataDir:string,clock:Clock):Promise<World>{const dir=resolve(dataDir);await ensureDir(dir);try{return validateWorld(JSON.parse(await safeRead(join(dir,'world.json'))));}catch(error){if((error as NodeJS.ErrnoException).code!=='ENOENT')throw error;const world=generateWorld({seed:randomBytes(32).toString('hex'),generatedAtMs:clock.now(),worldId:randomUUID()});await save(dir,world);return world;}}
+export async function reprovisionWorld(dataDir:string,clock:Clock):Promise<World>{const dir=resolve(dataDir);const old=await loadOrCreateWorld(dir,clock);const archives=join(dir,'worlds');await ensureDir(archives);await writeFile(join(archives,`${old.worldId}.json`),JSON.stringify(old),{flag:'wx',mode:0o600}).catch(e=>{if(e.code!=='EEXIST')throw e;});const next=generateWorld({seed:randomBytes(32).toString('hex'),generatedAtMs:clock.now(),worldId:randomUUID()});await save(dir,next);return next;}
+export async function acquireLease(dataDir:string):Promise<{release():Promise<void>}>{const dir=resolve(dataDir);await ensureDir(dir);const path=join(dir,'owner.lock');const nonce=randomUUID();const handle=await open(path,'wx',0o600);await handle.writeFile(JSON.stringify({pid:process.pid,host:hostname(),startedAt:Date.now()-process.uptime()*1000,nonce}));await handle.sync();await handle.close();return {async release(){const lock=JSON.parse(await safeRead(path));if(lock.nonce!==nonce)throw Error('lease owner changed');await unlink(path);}};}
+export async function recoverLease(dataDir:string,acknowledgeStopped=false):Promise<void>{const path=join(resolve(dataDir),'owner.lock');const lock=JSON.parse(await safeRead(path));if(lock.host===hostname()){try{process.kill(lock.pid,0);throw Error('owner process still exists; refusing recovery');}catch(e){if((e as NodeJS.ErrnoException).code!=='ESRCH')throw e;}}else if(!acknowledgeStopped)throw Error('unknown namespace: acknowledge stopped deployment explicitly');await unlink(path);}
