@@ -1,0 +1,40 @@
+{
+  "additionalProperties": false,
+  "type": "object",
+  "required": [
+    "id",
+    "nodeId",
+    "ok"
+  ],
+  "properties": {
+    "id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "nodeId": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "ok": {
+      "type": "boolean"
+    },
+    "payload": {},
+    "payloadJSON": {
+      "type": "string"
+    },
+    "error": {
+      "additionalProperties": false,
+      "type": "object",
+      "properties": {
+        "code": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "message": {
+          "minLength": 1,
+          "type": "string"
+        }
+      }
+    }
+  }
+}

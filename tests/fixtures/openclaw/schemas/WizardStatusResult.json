@@ -1,0 +1,32 @@
+{
+  "additionalProperties": false,
+  "type": "object",
+  "required": [
+    "status"
+  ],
+  "properties": {
+    "status": {
+      "anyOf": [
+        {
+          "const": "running",
+          "type": "string"
+        },
+        {
+          "const": "done",
+          "type": "string"
+        },
+        {
+          "const": "cancelled",
+          "type": "string"
+        },
+        {
+          "const": "error",
+          "type": "string"
+        }
+      ]
+    },
+    "error": {
+      "type": "string"
+    }
+  }
+}

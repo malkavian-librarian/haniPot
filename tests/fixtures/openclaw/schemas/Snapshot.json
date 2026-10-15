@@ -1,0 +1,154 @@
+{
+  "additionalProperties": false,
+  "type": "object",
+  "required": [
+    "presence",
+    "health",
+    "stateVersion",
+    "uptimeMs"
+  ],
+  "properties": {
+    "presence": {
+      "type": "array",
+      "items": {
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "ts"
+        ],
+        "properties": {
+          "host": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "ip": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "version": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "platform": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "deviceFamily": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "modelIdentifier": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "mode": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "lastInputSeconds": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "reason": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          "text": {
+            "type": "string"
+          },
+          "ts": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "deviceId": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "roles": {
+            "type": "array",
+            "items": {
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          "scopes": {
+            "type": "array",
+            "items": {
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          "instanceId": {
+            "minLength": 1,
+            "type": "string"
+          }
+        }
+      }
+    },
+    "health": {},
+    "stateVersion": {
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "presence",
+        "health"
+      ],
+      "properties": {
+        "presence": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "health": {
+          "minimum": 0,
+          "type": "integer"
+        }
+      }
+    },
+    "uptimeMs": {
+      "minimum": 0,
+      "type": "integer"
+    },
+    "configPath": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "stateDir": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "sessionDefaults": {
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "defaultAgentId",
+        "mainKey",
+        "mainSessionKey"
+      ],
+      "properties": {
+        "defaultAgentId": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "mainKey": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "mainSessionKey": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "scope": {
+          "minLength": 1,
+          "type": "string"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,119 @@
+{
+  "discriminator": "type",
+  "anyOf": [
+    {
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "type",
+        "id",
+        "method"
+      ],
+      "properties": {
+        "type": {
+          "const": "req",
+          "type": "string"
+        },
+        "id": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "method": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "params": {}
+      }
+    },
+    {
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "type",
+        "id",
+        "ok"
+      ],
+      "properties": {
+        "type": {
+          "const": "res",
+          "type": "string"
+        },
+        "id": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "ok": {
+          "type": "boolean"
+        },
+        "payload": {},
+        "error": {
+          "additionalProperties": false,
+          "type": "object",
+          "required": [
+            "code",
+            "message"
+          ],
+          "properties": {
+            "code": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "message": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "details": {},
+            "retryable": {
+              "type": "boolean"
+            },
+            "retryAfterMs": {
+              "minimum": 0,
+              "type": "integer"
+            }
+          }
+        }
+      }
+    },
+    {
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "type",
+        "event"
+      ],
+      "properties": {
+        "type": {
+          "const": "event",
+          "type": "string"
+        },
+        "event": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "payload": {},
+        "seq": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "stateVersion": {
+          "additionalProperties": false,
+          "type": "object",
+          "required": [
+            "presence",
+            "health"
+          ],
+          "properties": {
+            "presence": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "health": {
+              "minimum": 0,
+              "type": "integer"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

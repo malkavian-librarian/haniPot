@@ -1,0 +1,27 @@
+{
+  "additionalProperties": false,
+  "type": "object",
+  "required": [
+    "skillKey"
+  ],
+  "properties": {
+    "skillKey": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "enabled": {
+      "type": "boolean"
+    },
+    "apiKey": {
+      "type": "string"
+    },
+    "env": {
+      "type": "object",
+      "patternProperties": {
+        "^(.*)$": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

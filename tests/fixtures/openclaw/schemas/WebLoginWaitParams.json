@@ -1,0 +1,13 @@
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "timeoutMs": {
+      "minimum": 0,
+      "type": "integer"
+    },
+    "accountId": {
+      "type": "string"
+    }
+  }
+}

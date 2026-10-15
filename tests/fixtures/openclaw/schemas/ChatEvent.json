@@ -1,0 +1,52 @@
+{
+  "additionalProperties": false,
+  "type": "object",
+  "required": [
+    "runId",
+    "sessionKey",
+    "seq",
+    "state"
+  ],
+  "properties": {
+    "runId": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "sessionKey": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "seq": {
+      "minimum": 0,
+      "type": "integer"
+    },
+    "state": {
+      "anyOf": [
+        {
+          "const": "delta",
+          "type": "string"
+        },
+        {
+          "const": "final",
+          "type": "string"
+        },
+        {
+          "const": "aborted",
+          "type": "string"
+        },
+        {
+          "const": "error",
+          "type": "string"
+        }
+      ]
+    },
+    "message": {},
+    "errorMessage": {
+      "type": "string"
+    },
+    "usage": {},
+    "stopReason": {
+      "type": "string"
+    }
+  }
+}

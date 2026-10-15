@@ -1,0 +1,273 @@
+{
+  "additionalProperties": false,
+  "type": "object",
+  "required": [
+    "id",
+    "name",
+    "enabled",
+    "createdAtMs",
+    "updatedAtMs",
+    "schedule",
+    "sessionTarget",
+    "wakeMode",
+    "payload",
+    "state"
+  ],
+  "properties": {
+    "id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "agentId": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "name": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "enabled": {
+      "type": "boolean"
+    },
+    "deleteAfterRun": {
+      "type": "boolean"
+    },
+    "createdAtMs": {
+      "minimum": 0,
+      "type": "integer"
+    },
+    "updatedAtMs": {
+      "minimum": 0,
+      "type": "integer"
+    },
+    "schedule": {
+      "anyOf": [
+        {
+          "additionalProperties": false,
+          "type": "object",
+          "required": [
+            "kind",
+            "atMs"
+          ],
+          "properties": {
+            "kind": {
+              "const": "at",
+              "type": "string"
+            },
+            "atMs": {
+              "minimum": 0,
+              "type": "integer"
+            }
+          }
+        },
+        {
+          "additionalProperties": false,
+          "type": "object",
+          "required": [
+            "kind",
+            "everyMs"
+          ],
+          "properties": {
+            "kind": {
+              "const": "every",
+              "type": "string"
+            },
+            "everyMs": {
+              "minimum": 1,
+              "type": "integer"
+            },
+            "anchorMs": {
+              "minimum": 0,
+              "type": "integer"
+            }
+          }
+        },
+        {
+          "additionalProperties": false,
+          "type": "object",
+          "required": [
+            "kind",
+            "expr"
+          ],
+          "properties": {
+            "kind": {
+              "const": "cron",
+              "type": "string"
+            },
+            "expr": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "tz": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    },
+    "sessionTarget": {
+      "anyOf": [
+        {
+          "const": "main",
+          "type": "string"
+        },
+        {
+          "const": "isolated",
+          "type": "string"
+        }
+      ]
+    },
+    "wakeMode": {
+      "anyOf": [
+        {
+          "const": "next-heartbeat",
+          "type": "string"
+        },
+        {
+          "const": "now",
+          "type": "string"
+        }
+      ]
+    },
+    "payload": {
+      "anyOf": [
+        {
+          "additionalProperties": false,
+          "type": "object",
+          "required": [
+            "kind",
+            "text"
+          ],
+          "properties": {
+            "kind": {
+              "const": "systemEvent",
+              "type": "string"
+            },
+            "text": {
+              "minLength": 1,
+              "type": "string"
+            }
+          }
+        },
+        {
+          "additionalProperties": false,
+          "type": "object",
+          "required": [
+            "kind",
+            "message"
+          ],
+          "properties": {
+            "kind": {
+              "const": "agentTurn",
+              "type": "string"
+            },
+            "message": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "model": {
+              "type": "string"
+            },
+            "thinking": {
+              "type": "string"
+            },
+            "timeoutSeconds": {
+              "minimum": 1,
+              "type": "integer"
+            },
+            "deliver": {
+              "type": "boolean"
+            },
+            "channel": {
+              "anyOf": [
+                {
+                  "const": "last",
+                  "type": "string"
+                },
+                {
+                  "minLength": 1,
+                  "type": "string"
+                }
+              ]
+            },
+            "to": {
+              "type": "string"
+            },
+            "bestEffortDeliver": {
+              "type": "boolean"
+            }
+          }
+        }
+      ]
+    },
+    "isolation": {
+      "additionalProperties": false,
+      "type": "object",
+      "properties": {
+        "postToMainPrefix": {
+          "type": "string"
+        },
+        "postToMainMode": {
+          "anyOf": [
+            {
+              "const": "summary",
+              "type": "string"
+            },
+            {
+              "const": "full",
+              "type": "string"
+            }
+          ]
+        },
+        "postToMainMaxChars": {
+          "minimum": 0,
+          "type": "integer"
+        }
+      }
+    },
+    "state": {
+      "additionalProperties": false,
+      "type": "object",
+      "properties": {
+        "nextRunAtMs": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "runningAtMs": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "lastRunAtMs": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "lastStatus": {
+          "anyOf": [
+            {
+              "const": "ok",
+              "type": "string"
+            },
+            {
+              "const": "error",
+              "type": "string"
+            },
+            {
+              "const": "skipped",
+              "type": "string"
+            }
+          ]
+        },
+        "lastError": {
+          "type": "string"
+        },
+        "lastDurationMs": {
+          "minimum": 0,
+          "type": "integer"
+        }
+      }
+    }
+  }
+}

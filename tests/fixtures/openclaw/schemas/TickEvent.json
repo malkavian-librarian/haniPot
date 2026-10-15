@@ -1,0 +1,13 @@
+{
+  "additionalProperties": false,
+  "type": "object",
+  "required": [
+    "ts"
+  ],
+  "properties": {
+    "ts": {
+      "minimum": 0,
+      "type": "integer"
+    }
+  }
+}

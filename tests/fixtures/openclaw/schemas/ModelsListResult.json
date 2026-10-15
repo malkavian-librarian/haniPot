@@ -1,0 +1,42 @@
+{
+  "additionalProperties": false,
+  "type": "object",
+  "required": [
+    "models"
+  ],
+  "properties": {
+    "models": {
+      "type": "array",
+      "items": {
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "provider"
+        ],
+        "properties": {
+          "id": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "name": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "provider": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "contextWindow": {
+            "minimum": 1,
+            "type": "integer"
+          },
+          "reasoning": {
+            "type": "boolean"
+          }
+        }
+      }
+    }
+  }
+}

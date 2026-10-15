@@ -1,0 +1,227 @@
+{
+  "additionalProperties": false,
+  "type": "object",
+  "required": [
+    "ts",
+    "channelOrder",
+    "channelLabels",
+    "channels",
+    "channelAccounts",
+    "channelDefaultAccountId"
+  ],
+  "properties": {
+    "ts": {
+      "minimum": 0,
+      "type": "integer"
+    },
+    "channelOrder": {
+      "type": "array",
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      }
+    },
+    "channelLabels": {
+      "type": "object",
+      "patternProperties": {
+        "^(.*)$": {
+          "minLength": 1,
+          "type": "string"
+        }
+      }
+    },
+    "channelDetailLabels": {
+      "type": "object",
+      "patternProperties": {
+        "^(.*)$": {
+          "minLength": 1,
+          "type": "string"
+        }
+      }
+    },
+    "channelSystemImages": {
+      "type": "object",
+      "patternProperties": {
+        "^(.*)$": {
+          "minLength": 1,
+          "type": "string"
+        }
+      }
+    },
+    "channelMeta": {
+      "type": "array",
+      "items": {
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "label",
+          "detailLabel"
+        ],
+        "properties": {
+          "id": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "label": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "detailLabel": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "systemImage": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "channels": {
+      "type": "object",
+      "patternProperties": {
+        "^(.*)$": {}
+      }
+    },
+    "channelAccounts": {
+      "type": "object",
+      "patternProperties": {
+        "^(.*)$": {
+          "type": "array",
+          "items": {
+            "additionalProperties": true,
+            "type": "object",
+            "required": [
+              "accountId"
+            ],
+            "properties": {
+              "accountId": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "enabled": {
+                "type": "boolean"
+              },
+              "configured": {
+                "type": "boolean"
+              },
+              "linked": {
+                "type": "boolean"
+              },
+              "running": {
+                "type": "boolean"
+              },
+              "connected": {
+                "type": "boolean"
+              },
+              "reconnectAttempts": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "lastConnectedAt": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "lastError": {
+                "type": "string"
+              },
+              "lastStartAt": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "lastStopAt": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "lastInboundAt": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "lastOutboundAt": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "lastProbeAt": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "mode": {
+                "type": "string"
+              },
+              "dmPolicy": {
+                "type": "string"
+              },
+              "allowFrom": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "tokenSource": {
+                "type": "string"
+              },
+              "botTokenSource": {
+                "type": "string"
+              },
+              "appTokenSource": {
+                "type": "string"
+              },
+              "baseUrl": {
+                "type": "string"
+              },
+              "allowUnmentionedGroups": {
+                "type": "boolean"
+              },
+              "cliPath": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "dbPath": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "port": {
+                "anyOf": [
+                  {
+                    "minimum": 0,
+                    "type": "integer"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "probe": {},
+              "audit": {},
+              "application": {}
+            }
+          }
+        }
+      }
+    },
+    "channelDefaultAccountId": {
+      "type": "object",
+      "patternProperties": {
+        "^(.*)$": {
+          "minLength": 1,
+          "type": "string"
+        }
+      }
+    }
+  }
+}

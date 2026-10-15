@@ -1,0 +1,62 @@
+{
+  "additionalProperties": false,
+  "type": "object",
+  "required": [
+    "nodeId"
+  ],
+  "properties": {
+    "nodeId": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "displayName": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "platform": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "version": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "coreVersion": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "uiVersion": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "deviceFamily": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "modelIdentifier": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "caps": {
+      "type": "array",
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      }
+    },
+    "commands": {
+      "type": "array",
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      }
+    },
+    "remoteIp": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "silent": {
+      "type": "boolean"
+    }
+  }
+}

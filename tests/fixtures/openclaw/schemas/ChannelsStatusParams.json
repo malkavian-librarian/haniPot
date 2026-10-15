@@ -1,0 +1,13 @@
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "probe": {
+      "type": "boolean"
+    },
+    "timeoutMs": {
+      "minimum": 0,
+      "type": "integer"
+    }
+  }
+}

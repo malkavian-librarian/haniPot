@@ -1,0 +1,42 @@
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "limit": {
+      "minimum": 1,
+      "type": "integer"
+    },
+    "activeMinutes": {
+      "minimum": 1,
+      "type": "integer"
+    },
+    "includeGlobal": {
+      "type": "boolean"
+    },
+    "includeUnknown": {
+      "type": "boolean"
+    },
+    "includeDerivedTitles": {
+      "type": "boolean"
+    },
+    "includeLastMessage": {
+      "type": "boolean"
+    },
+    "label": {
+      "minLength": 1,
+      "maxLength": 64,
+      "type": "string"
+    },
+    "spawnedBy": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "agentId": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "search": {
+      "type": "string"
+    }
+  }
+}

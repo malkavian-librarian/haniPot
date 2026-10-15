@@ -1,0 +1,35 @@
+name: hanipot-reference
+services:
+  reference:
+    image: hanipot-reference:77e703c
+    build:
+      context: ../..
+      dockerfile: deploy/reference/Dockerfile
+    networks: [reference]
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    tmpfs:
+      - /state:uid=1000,gid=1000,size=33554432
+      - /tmp:uid=1000,gid=1000,size=16777216
+    mem_limit: 2g
+    cpus: 2
+    healthcheck:
+      test: [CMD, node, -e, "fetch('http://127.0.0.1:18789/').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 3s
+      timeout: 3s
+      retries: 40
+      start_period: 10s
+  capture:
+    image: hanipot-reference:77e703c
+    command: [node, /reference/capture-reference.mjs, ws://reference:18789, /captures/reference.json]
+    depends_on:
+      reference:
+        condition: service_healthy
+    networks: [reference]
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    mem_limit: 256m
+networks:
+  reference:
+    internal: true

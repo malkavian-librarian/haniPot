@@ -1,0 +1,36 @@
+{
+  "additionalProperties": false,
+  "type": "object",
+  "required": [
+    "sessionKey",
+    "message",
+    "idempotencyKey"
+  ],
+  "properties": {
+    "sessionKey": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "message": {
+      "type": "string"
+    },
+    "thinking": {
+      "type": "string"
+    },
+    "deliver": {
+      "type": "boolean"
+    },
+    "attachments": {
+      "type": "array",
+      "items": {}
+    },
+    "timeoutMs": {
+      "minimum": 0,
+      "type": "integer"
+    },
+    "idempotencyKey": {
+      "minLength": 1,
+      "type": "string"
+    }
+  }
+}

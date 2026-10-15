@@ -1,0 +1,72 @@
+{
+  "additionalProperties": false,
+  "type": "object",
+  "required": [
+    "requestId",
+    "deviceId",
+    "publicKey",
+    "ts"
+  ],
+  "properties": {
+    "requestId": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "deviceId": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "publicKey": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "displayName": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "platform": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "clientId": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "clientMode": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "role": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "roles": {
+      "type": "array",
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      }
+    },
+    "scopes": {
+      "type": "array",
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      }
+    },
+    "remoteIp": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "silent": {
+      "type": "boolean"
+    },
+    "isRepair": {
+      "type": "boolean"
+    },
+    "ts": {
+      "minimum": 0,
+      "type": "integer"
+    }
+  }
+}

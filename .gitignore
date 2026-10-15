@@ -1,0 +1,14 @@
+node_modules/
+dist/
+out/
+data/
+artifacts/
+.superpowers/
+.worktrees/
+.env
+.env.*
+!.env.example
+*.db
+*.db-wal
+*.db-shm
+*.log

@@ -1,0 +1,18 @@
+{
+  "additionalProperties": false,
+  "type": "object",
+  "required": [
+    "presence",
+    "health"
+  ],
+  "properties": {
+    "presence": {
+      "minimum": 0,
+      "type": "integer"
+    },
+    "health": {
+      "minimum": 0,
+      "type": "integer"
+    }
+  }
+}

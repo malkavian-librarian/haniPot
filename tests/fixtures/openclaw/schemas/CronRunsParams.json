@@ -1,0 +1,40 @@
+{
+  "anyOf": [
+    {
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "id"
+      ],
+      "properties": {
+        "id": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "limit": {
+          "minimum": 1,
+          "maximum": 5000,
+          "type": "integer"
+        }
+      }
+    },
+    {
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "jobId"
+      ],
+      "properties": {
+        "jobId": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "limit": {
+          "minimum": 1,
+          "maximum": 5000,
+          "type": "integer"
+        }
+      }
+    }
+  ]
+}

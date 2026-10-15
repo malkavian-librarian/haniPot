@@ -1,0 +1,188 @@
+{
+  "additionalProperties": false,
+  "type": "object",
+  "required": [
+    "key"
+  ],
+  "properties": {
+    "key": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "label": {
+      "anyOf": [
+        {
+          "minLength": 1,
+          "maxLength": 64,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "thinkingLevel": {
+      "anyOf": [
+        {
+          "minLength": 1,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "verboseLevel": {
+      "anyOf": [
+        {
+          "minLength": 1,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "reasoningLevel": {
+      "anyOf": [
+        {
+          "minLength": 1,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "responseUsage": {
+      "anyOf": [
+        {
+          "const": "off",
+          "type": "string"
+        },
+        {
+          "const": "tokens",
+          "type": "string"
+        },
+        {
+          "const": "full",
+          "type": "string"
+        },
+        {
+          "const": "on",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "elevatedLevel": {
+      "anyOf": [
+        {
+          "minLength": 1,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "execHost": {
+      "anyOf": [
+        {
+          "minLength": 1,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "execSecurity": {
+      "anyOf": [
+        {
+          "minLength": 1,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "execAsk": {
+      "anyOf": [
+        {
+          "minLength": 1,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "execNode": {
+      "anyOf": [
+        {
+          "minLength": 1,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "model": {
+      "anyOf": [
+        {
+          "minLength": 1,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "spawnedBy": {
+      "anyOf": [
+        {
+          "minLength": 1,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "sendPolicy": {
+      "anyOf": [
+        {
+          "const": "allow",
+          "type": "string"
+        },
+        {
+          "const": "deny",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "groupActivation": {
+      "anyOf": [
+        {
+          "const": "mention",
+          "type": "string"
+        },
+        {
+          "const": "always",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  }
+}

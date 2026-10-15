@@ -1,0 +1,13 @@
+{
+  "additionalProperties": false,
+  "type": "object",
+  "required": [
+    "sessionId"
+  ],
+  "properties": {
+    "sessionId": {
+      "minLength": 1,
+      "type": "string"
+    }
+  }
+}

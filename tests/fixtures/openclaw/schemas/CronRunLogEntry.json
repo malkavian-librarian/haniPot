@@ -1,0 +1,57 @@
+{
+  "additionalProperties": false,
+  "type": "object",
+  "required": [
+    "ts",
+    "jobId",
+    "action"
+  ],
+  "properties": {
+    "ts": {
+      "minimum": 0,
+      "type": "integer"
+    },
+    "jobId": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "action": {
+      "const": "finished",
+      "type": "string"
+    },
+    "status": {
+      "anyOf": [
+        {
+          "const": "ok",
+          "type": "string"
+        },
+        {
+          "const": "error",
+          "type": "string"
+        },
+        {
+          "const": "skipped",
+          "type": "string"
+        }
+      ]
+    },
+    "error": {
+      "type": "string"
+    },
+    "summary": {
+      "type": "string"
+    },
+    "runAtMs": {
+      "minimum": 0,
+      "type": "integer"
+    },
+    "durationMs": {
+      "minimum": 0,
+      "type": "integer"
+    },
+    "nextRunAtMs": {
+      "minimum": 0,
+      "type": "integer"
+    }
+  }
+}

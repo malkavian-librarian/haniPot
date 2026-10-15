@@ -1,0 +1,34 @@
+{
+  "additionalProperties": false,
+  "type": "object",
+  "required": [
+    "id",
+    "nodeId",
+    "command"
+  ],
+  "properties": {
+    "id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "nodeId": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "command": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "paramsJSON": {
+      "type": "string"
+    },
+    "timeoutMs": {
+      "minimum": 0,
+      "type": "integer"
+    },
+    "idempotencyKey": {
+      "minLength": 1,
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "mode": {
+      "anyOf": [
+        {
+          "const": "local",
+          "type": "string"
+        },
+        {
+          "const": "remote",
+          "type": "string"
+        }
+      ]
+    },
+    "workspace": {
+      "type": "string"
+    }
+  }
+}

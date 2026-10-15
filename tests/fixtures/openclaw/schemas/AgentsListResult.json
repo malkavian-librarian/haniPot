@@ -1,0 +1,78 @@
+{
+  "additionalProperties": false,
+  "type": "object",
+  "required": [
+    "defaultId",
+    "mainKey",
+    "scope",
+    "agents"
+  ],
+  "properties": {
+    "defaultId": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "mainKey": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "scope": {
+      "anyOf": [
+        {
+          "const": "per-sender",
+          "type": "string"
+        },
+        {
+          "const": "global",
+          "type": "string"
+        }
+      ]
+    },
+    "agents": {
+      "type": "array",
+      "items": {
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id"
+        ],
+        "properties": {
+          "id": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "name": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "identity": {
+            "additionalProperties": false,
+            "type": "object",
+            "properties": {
+              "name": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "theme": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "emoji": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "avatar": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "avatarUrl": {
+                "minLength": 1,
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

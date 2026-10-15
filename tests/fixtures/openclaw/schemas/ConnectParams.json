@@ -1,0 +1,226 @@
+{
+  "additionalProperties": false,
+  "type": "object",
+  "required": [
+    "minProtocol",
+    "maxProtocol",
+    "client"
+  ],
+  "properties": {
+    "minProtocol": {
+      "minimum": 1,
+      "type": "integer"
+    },
+    "maxProtocol": {
+      "minimum": 1,
+      "type": "integer"
+    },
+    "client": {
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "id",
+        "version",
+        "platform",
+        "mode"
+      ],
+      "properties": {
+        "id": {
+          "anyOf": [
+            {
+              "const": "webchat-ui",
+              "type": "string"
+            },
+            {
+              "const": "openclaw-control-ui",
+              "type": "string"
+            },
+            {
+              "const": "webchat",
+              "type": "string"
+            },
+            {
+              "const": "cli",
+              "type": "string"
+            },
+            {
+              "const": "gateway-client",
+              "type": "string"
+            },
+            {
+              "const": "openclaw-macos",
+              "type": "string"
+            },
+            {
+              "const": "openclaw-ios",
+              "type": "string"
+            },
+            {
+              "const": "openclaw-android",
+              "type": "string"
+            },
+            {
+              "const": "node-host",
+              "type": "string"
+            },
+            {
+              "const": "test",
+              "type": "string"
+            },
+            {
+              "const": "fingerprint",
+              "type": "string"
+            },
+            {
+              "const": "openclaw-probe",
+              "type": "string"
+            }
+          ]
+        },
+        "displayName": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "version": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "platform": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "deviceFamily": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "modelIdentifier": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "mode": {
+          "anyOf": [
+            {
+              "const": "webchat",
+              "type": "string"
+            },
+            {
+              "const": "cli",
+              "type": "string"
+            },
+            {
+              "const": "ui",
+              "type": "string"
+            },
+            {
+              "const": "backend",
+              "type": "string"
+            },
+            {
+              "const": "node",
+              "type": "string"
+            },
+            {
+              "const": "probe",
+              "type": "string"
+            },
+            {
+              "const": "test",
+              "type": "string"
+            }
+          ]
+        },
+        "instanceId": {
+          "minLength": 1,
+          "type": "string"
+        }
+      }
+    },
+    "caps": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      }
+    },
+    "commands": {
+      "type": "array",
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      }
+    },
+    "permissions": {
+      "type": "object",
+      "patternProperties": {
+        "^(.*)$": {
+          "type": "boolean"
+        }
+      }
+    },
+    "pathEnv": {
+      "type": "string"
+    },
+    "role": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "scopes": {
+      "type": "array",
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      }
+    },
+    "device": {
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "id",
+        "publicKey",
+        "signature",
+        "signedAt"
+      ],
+      "properties": {
+        "id": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "publicKey": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "signature": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "signedAt": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "nonce": {
+          "minLength": 1,
+          "type": "string"
+        }
+      }
+    },
+    "auth": {
+      "additionalProperties": false,
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "locale": {
+      "type": "string"
+    },
+    "userAgent": {
+      "type": "string"
+    }
+  }
+}

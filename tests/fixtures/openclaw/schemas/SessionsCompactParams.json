@@ -1,0 +1,17 @@
+{
+  "additionalProperties": false,
+  "type": "object",
+  "required": [
+    "key"
+  ],
+  "properties": {
+    "key": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "maxLines": {
+      "minimum": 1,
+      "type": "integer"
+    }
+  }
+}

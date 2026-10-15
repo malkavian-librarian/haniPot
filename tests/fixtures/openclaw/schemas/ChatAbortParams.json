@@ -1,0 +1,17 @@
+{
+  "additionalProperties": false,
+  "type": "object",
+  "required": [
+    "sessionKey"
+  ],
+  "properties": {
+    "sessionKey": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "runId": {
+      "minLength": 1,
+      "type": "string"
+    }
+  }
+}

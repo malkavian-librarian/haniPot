@@ -1,0 +1,108 @@
+{
+  "additionalProperties": false,
+  "type": "object",
+  "required": [
+    "file"
+  ],
+  "properties": {
+    "file": {
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "version"
+      ],
+      "properties": {
+        "version": {
+          "const": 1,
+          "type": "number"
+        },
+        "socket": {
+          "additionalProperties": false,
+          "type": "object",
+          "properties": {
+            "path": {
+              "type": "string"
+            },
+            "token": {
+              "type": "string"
+            }
+          }
+        },
+        "defaults": {
+          "additionalProperties": false,
+          "type": "object",
+          "properties": {
+            "security": {
+              "type": "string"
+            },
+            "ask": {
+              "type": "string"
+            },
+            "askFallback": {
+              "type": "string"
+            },
+            "autoAllowSkills": {
+              "type": "boolean"
+            }
+          }
+        },
+        "agents": {
+          "type": "object",
+          "patternProperties": {
+            "^(.*)$": {
+              "additionalProperties": false,
+              "type": "object",
+              "properties": {
+                "security": {
+                  "type": "string"
+                },
+                "ask": {
+                  "type": "string"
+                },
+                "askFallback": {
+                  "type": "string"
+                },
+                "autoAllowSkills": {
+                  "type": "boolean"
+                },
+                "allowlist": {
+                  "type": "array",
+                  "items": {
+                    "additionalProperties": false,
+                    "type": "object",
+                    "required": [
+                      "pattern"
+                    ],
+                    "properties": {
+                      "id": {
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      "pattern": {
+                        "type": "string"
+                      },
+                      "lastUsedAt": {
+                        "minimum": 0,
+                        "type": "integer"
+                      },
+                      "lastUsedCommand": {
+                        "type": "string"
+                      },
+                      "lastResolvedPath": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "baseHash": {
+      "minLength": 1,
+      "type": "string"
+    }
+  }
+}

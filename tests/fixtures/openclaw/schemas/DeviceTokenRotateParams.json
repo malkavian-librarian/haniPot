@@ -1,0 +1,25 @@
+{
+  "additionalProperties": false,
+  "type": "object",
+  "required": [
+    "deviceId",
+    "role"
+  ],
+  "properties": {
+    "deviceId": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "role": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "scopes": {
+      "type": "array",
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      }
+    }
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "additionalProperties": false,
+  "type": "object",
+  "required": [
+    "to",
+    "message",
+    "idempotencyKey"
+  ],
+  "properties": {
+    "to": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "message": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "mediaUrl": {
+      "type": "string"
+    },
+    "mediaUrls": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "gifPlayback": {
+      "type": "boolean"
+    },
+    "channel": {
+      "type": "string"
+    },
+    "accountId": {
+      "type": "string"
+    },
+    "sessionKey": {
+      "type": "string"
+    },
+    "idempotencyKey": {
+      "minLength": 1,
+      "type": "string"
+    }
+  }
+}

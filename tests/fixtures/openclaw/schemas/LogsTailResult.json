@@ -1,0 +1,36 @@
+{
+  "additionalProperties": false,
+  "type": "object",
+  "required": [
+    "file",
+    "cursor",
+    "size",
+    "lines"
+  ],
+  "properties": {
+    "file": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "cursor": {
+      "minimum": 0,
+      "type": "integer"
+    },
+    "size": {
+      "minimum": 0,
+      "type": "integer"
+    },
+    "lines": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "truncated": {
+      "type": "boolean"
+    },
+    "reset": {
+      "type": "boolean"
+    }
+  }
+}

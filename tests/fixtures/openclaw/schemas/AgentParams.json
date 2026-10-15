@@ -1,0 +1,86 @@
+{
+  "additionalProperties": false,
+  "type": "object",
+  "required": [
+    "message",
+    "idempotencyKey"
+  ],
+  "properties": {
+    "message": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "agentId": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "to": {
+      "type": "string"
+    },
+    "replyTo": {
+      "type": "string"
+    },
+    "sessionId": {
+      "type": "string"
+    },
+    "sessionKey": {
+      "type": "string"
+    },
+    "thinking": {
+      "type": "string"
+    },
+    "deliver": {
+      "type": "boolean"
+    },
+    "attachments": {
+      "type": "array",
+      "items": {}
+    },
+    "channel": {
+      "type": "string"
+    },
+    "replyChannel": {
+      "type": "string"
+    },
+    "accountId": {
+      "type": "string"
+    },
+    "replyAccountId": {
+      "type": "string"
+    },
+    "threadId": {
+      "type": "string"
+    },
+    "groupId": {
+      "type": "string"
+    },
+    "groupChannel": {
+      "type": "string"
+    },
+    "groupSpace": {
+      "type": "string"
+    },
+    "timeout": {
+      "minimum": 0,
+      "type": "integer"
+    },
+    "lane": {
+      "type": "string"
+    },
+    "extraSystemPrompt": {
+      "type": "string"
+    },
+    "idempotencyKey": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "label": {
+      "minLength": 1,
+      "maxLength": 64,
+      "type": "string"
+    },
+    "spawnedBy": {
+      "type": "string"
+    }
+  }
+}

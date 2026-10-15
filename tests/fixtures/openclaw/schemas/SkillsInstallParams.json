@@ -1,0 +1,22 @@
+{
+  "additionalProperties": false,
+  "type": "object",
+  "required": [
+    "name",
+    "installId"
+  ],
+  "properties": {
+    "name": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "installId": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "timeoutMs": {
+      "minimum": 1000,
+      "type": "integer"
+    }
+  }
+}

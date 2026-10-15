@@ -1,0 +1,27 @@
+{
+  "additionalProperties": false,
+  "type": "object",
+  "required": [
+    "sessionId"
+  ],
+  "properties": {
+    "sessionId": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "answer": {
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "stepId"
+      ],
+      "properties": {
+        "stepId": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "value": {}
+      }
+    }
+  }
+}

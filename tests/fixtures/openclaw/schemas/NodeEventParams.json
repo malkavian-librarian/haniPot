@@ -1,0 +1,17 @@
+{
+  "additionalProperties": false,
+  "type": "object",
+  "required": [
+    "event"
+  ],
+  "properties": {
+    "event": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "payload": {},
+    "payloadJSON": {
+      "type": "string"
+    }
+  }
+}

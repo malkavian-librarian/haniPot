@@ -1,0 +1,30 @@
+{
+  "anyOf": [
+    {
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "id"
+      ],
+      "properties": {
+        "id": {
+          "minLength": 1,
+          "type": "string"
+        }
+      }
+    },
+    {
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "jobId"
+      ],
+      "properties": {
+        "jobId": {
+          "minLength": 1,
+          "type": "string"
+        }
+      }
+    }
+  ]
+}

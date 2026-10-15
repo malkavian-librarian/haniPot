@@ -1,0 +1,54 @@
+{
+  "anyOf": [
+    {
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "id"
+      ],
+      "properties": {
+        "id": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "mode": {
+          "anyOf": [
+            {
+              "const": "due",
+              "type": "string"
+            },
+            {
+              "const": "force",
+              "type": "string"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "jobId"
+      ],
+      "properties": {
+        "jobId": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "mode": {
+          "anyOf": [
+            {
+              "const": "due",
+              "type": "string"
+            },
+            {
+              "const": "force",
+              "type": "string"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

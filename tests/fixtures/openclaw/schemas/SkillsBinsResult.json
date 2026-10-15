@@ -1,0 +1,16 @@
+{
+  "additionalProperties": false,
+  "type": "object",
+  "required": [
+    "bins"
+  ],
+  "properties": {
+    "bins": {
+      "type": "array",
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      }
+    }
+  }
+}

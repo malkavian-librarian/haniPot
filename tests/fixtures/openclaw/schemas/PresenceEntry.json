@@ -1,0 +1,81 @@
+{
+  "additionalProperties": false,
+  "type": "object",
+  "required": [
+    "ts"
+  ],
+  "properties": {
+    "host": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "ip": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "version": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "platform": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "deviceFamily": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "modelIdentifier": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "mode": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "lastInputSeconds": {
+      "minimum": 0,
+      "type": "integer"
+    },
+    "reason": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      }
+    },
+    "text": {
+      "type": "string"
+    },
+    "ts": {
+      "minimum": 0,
+      "type": "integer"
+    },
+    "deviceId": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "roles": {
+      "type": "array",
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      }
+    },
+    "scopes": {
+      "type": "array",
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      }
+    },
+    "instanceId": {
+      "minLength": 1,
+      "type": "string"
+    }
+  }
+}

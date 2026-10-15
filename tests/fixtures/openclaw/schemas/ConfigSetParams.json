@@ -1,0 +1,17 @@
+{
+  "additionalProperties": false,
+  "type": "object",
+  "required": [
+    "raw"
+  ],
+  "properties": {
+    "raw": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "baseHash": {
+      "minLength": 1,
+      "type": "string"
+    }
+  }
+}

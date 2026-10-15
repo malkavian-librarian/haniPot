@@ -1,0 +1,25 @@
+{
+  "additionalProperties": false,
+  "type": "object",
+  "required": [
+    "keys"
+  ],
+  "properties": {
+    "keys": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      }
+    },
+    "limit": {
+      "minimum": 1,
+      "type": "integer"
+    },
+    "maxChars": {
+      "minimum": 20,
+      "type": "integer"
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "owner": "Morgan Vale",
+  "business": "Juniper Supply",
+  "agentId": "main",
+  "model": "openai/gpt-4o-mini",
+  "sessions": [
+    {"key":"agent:main:main","id":"reference-main","messages":[{"role":"user","content":"Summarise the shop operations."},{"role":"assistant","content":"Juniper Supply has three pending supplier invoices."}]},
+    {"key":"agent:main:invoice","id":"reference-invoice","messages":[{"role":"user","content":"Review invoice JS-104."},{"role":"assistant","content":"Invoice JS-104 is awaiting approval."}]},
+    {"key":"agent:main:support","id":"reference-support","messages":[{"role":"user","content":"Check ticket T-203."},{"role":"assistant","content":"The customer requested a shipping update."}]},
+    {"key":"agent:main:stock","id":"reference-stock","messages":[{"role":"user","content":"Check the stock report."},{"role":"assistant","content":"Notebook stock is below the reorder threshold."}]},
+    {"key":"agent:main:returns","id":"reference-returns","messages":[{"role":"user","content":"Review order O-315."},{"role":"assistant","content":"The return request is pending review."}]},
+    {"key":"agent:main:daily","id":"reference-daily","messages":[{"role":"user","content":"Prepare the daily summary."},{"role":"assistant","content":"The daily report is ready for review."}]}
+  ]
+}

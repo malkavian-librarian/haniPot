@@ -1,0 +1,54 @@
+{
+  "additionalProperties": false,
+  "type": "object",
+  "required": [
+    "schema",
+    "uiHints",
+    "version",
+    "generatedAt"
+  ],
+  "properties": {
+    "schema": {},
+    "uiHints": {
+      "type": "object",
+      "patternProperties": {
+        "^(.*)$": {
+          "additionalProperties": false,
+          "type": "object",
+          "properties": {
+            "label": {
+              "type": "string"
+            },
+            "help": {
+              "type": "string"
+            },
+            "group": {
+              "type": "string"
+            },
+            "order": {
+              "type": "integer"
+            },
+            "advanced": {
+              "type": "boolean"
+            },
+            "sensitive": {
+              "type": "boolean"
+            },
+            "placeholder": {
+              "type": "string"
+            },
+            "itemTemplate": {}
+          }
+        }
+      }
+    },
+    "version": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "generatedAt": {
+      "minLength": 1,
+      "type": "string"
+    }
+  }
+}

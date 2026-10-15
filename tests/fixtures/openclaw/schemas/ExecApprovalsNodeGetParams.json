@@ -1,0 +1,13 @@
+{
+  "additionalProperties": false,
+  "type": "object",
+  "required": [
+    "nodeId"
+  ],
+  "properties": {
+    "nodeId": {
+      "minLength": 1,
+      "type": "string"
+    }
+  }
+}

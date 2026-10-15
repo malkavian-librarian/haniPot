@@ -1,0 +1,19 @@
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "force": {
+      "type": "boolean"
+    },
+    "timeoutMs": {
+      "minimum": 0,
+      "type": "integer"
+    },
+    "verbose": {
+      "type": "boolean"
+    },
+    "accountId": {
+      "type": "string"
+    }
+  }
+}

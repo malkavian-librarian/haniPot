@@ -1,0 +1,14 @@
+{
+  "sourceCommit": "77e703c69b07a236c2f0962bd195e03aae1b8da0",
+  "rawSha256": "6a26cccb6c059a34df1443dff5fcf3c52aca12492052ae2e75adee4d1267a47a",
+  "sanitizedSha256": "89c8cadaf3af39ac481b1f930f1b5be743189462062150e3d9ed321c463db18f",
+  "normalization": {
+    "host": "reference-host",
+    "connId": "reference-connection",
+    "nonce": "reference-nonce"
+  },
+  "syntheticCredentialInventory": [
+    "hanipot-reference-only-nonfunctional-token",
+    "deliberately-wrong-reference-token"
+  ]
+}

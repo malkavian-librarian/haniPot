@@ -1,0 +1,27 @@
+{
+  "additionalProperties": false,
+  "type": "object",
+  "required": [
+    "raw"
+  ],
+  "properties": {
+    "raw": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "baseHash": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "sessionKey": {
+      "type": "string"
+    },
+    "note": {
+      "type": "string"
+    },
+    "restartDelayMs": {
+      "minimum": 0,
+      "type": "integer"
+    }
+  }
+}

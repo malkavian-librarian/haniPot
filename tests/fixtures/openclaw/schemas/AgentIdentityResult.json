@@ -1,0 +1,21 @@
+{
+  "additionalProperties": false,
+  "type": "object",
+  "required": [
+    "agentId"
+  ],
+  "properties": {
+    "agentId": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "name": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "avatar": {
+      "minLength": 1,
+      "type": "string"
+    }
+  }
+}

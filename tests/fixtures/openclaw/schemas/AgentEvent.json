@@ -1,0 +1,35 @@
+{
+  "additionalProperties": false,
+  "type": "object",
+  "required": [
+    "runId",
+    "seq",
+    "stream",
+    "ts",
+    "data"
+  ],
+  "properties": {
+    "runId": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "seq": {
+      "minimum": 0,
+      "type": "integer"
+    },
+    "stream": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "ts": {
+      "minimum": 0,
+      "type": "integer"
+    },
+    "data": {
+      "type": "object",
+      "patternProperties": {
+        "^(.*)$": {}
+      }
+    }
+  }
+}

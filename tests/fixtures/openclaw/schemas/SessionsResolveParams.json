@@ -1,0 +1,33 @@
+{
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "key": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "sessionId": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "label": {
+      "minLength": 1,
+      "maxLength": 64,
+      "type": "string"
+    },
+    "agentId": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "spawnedBy": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "includeGlobal": {
+      "type": "boolean"
+    },
+    "includeUnknown": {
+      "type": "boolean"
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "additionalProperties": false,
+  "type": "object",
+  "required": [
+    "requestId",
+    "deviceId",
+    "decision",
+    "ts"
+  ],
+  "properties": {
+    "requestId": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "deviceId": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "decision": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "ts": {
+      "minimum": 0,
+      "type": "integer"
+    }
+  }
+}
