@@ -18,7 +18,7 @@ Plan: [reviewed gateway foundation](docs/superpowers/plans/2026-10-15-openclaw-g
 - [x] 10. Write backend, frontend, vulnerabilities and conventions documentation.
 - [x] 11. Create repository AGENTS.md referencing those documents.
 - [x] 12. Complete independent implementation review and security review; fix material evidence findings.
-- [ ] 13. Create a private GitHub repository and push reviewed source.
+- [x] 13. Create private GitHub repository and push reviewed source: https://github.com/malkavian-librarian/haniPot (main).
 
 ## Later modules (separate increments)
 
