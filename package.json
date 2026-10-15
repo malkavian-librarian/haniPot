@@ -1,0 +1,13 @@
+{
+  "name":"hanipot","version":"0.1.0","private":true,"type":"module",
+  "engines":{"node":">=24.13.0 <25"},
+  "scripts":{
+    "build":"tsc -p tsconfig.json && node tools/copy-assets.mjs",
+    "test:unit":"node --test dist/tests/unit/*.test.js",
+    "test:integration":"node --test dist/tests/integration/*.test.js",
+    "test":"npm run build && npm run test:unit && npm run test:integration",
+    "start":"node dist/src/cli.js"
+  },
+  "dependencies":{"ajv":"8.20.0","ws":"8.22.0"},
+  "devDependencies":{"typescript":"7.0.2","@types/node":"24.19.2","@types/ws":"8.18.2"}
+}
