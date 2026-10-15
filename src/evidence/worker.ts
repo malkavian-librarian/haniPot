@@ -12,8 +12,8 @@ if((db.prepare('SELECT version FROM meta').get() as {version:number}).version!==
 db.exec('PRAGMA max_page_count=131072');
 db.prepare('UPDATE connections SET ended=? WHERE ended IS NULL').run(Date.now());
 // A previous process may have died after a send and before its outcome transaction.
-const pending=db.prepare("SELECT row_id,metadata FROM events WHERE kind='response_prepared'").all() as {row_id:number;metadata:string}[];
-for(const row of pending){const meta=JSON.parse(row.metadata);const outcome=db.prepare("SELECT 1 FROM events WHERE kind='send_outcome' AND json_extract(metadata,'$.relatedEventId')=? LIMIT 1").get(meta.eventId);if(!outcome){meta.sendStatus='unknown_after_crash';db.prepare('UPDATE events SET metadata=? WHERE row_id=?').run(JSON.stringify(meta),row.row_id);}}
+let cursor=0;
+while(true){const pending=db.prepare("SELECT row_id,metadata FROM events WHERE row_id>? AND kind='response_prepared' AND json_extract(metadata,'$.sendStatus')='prepared' ORDER BY row_id LIMIT 32").all(cursor) as {row_id:number;metadata:string}[];if(!pending.length)break;for(const row of pending){cursor=row.row_id;const meta=JSON.parse(row.metadata);const outcome=db.prepare("SELECT 1 FROM events WHERE kind='send_outcome' AND json_extract(metadata,'$.relatedEventId')=? LIMIT 1").get(meta.eventId);if(!outcome){meta.sendStatus='unknown_after_crash';db.prepare('UPDATE events SET metadata=? WHERE row_id=?').run(JSON.stringify(meta),row.row_id);}}}
 function usedBytes(){let size=0;for(const name of readdirSync(options.dataDir)){if(name==='worlds'){for(const archive of readdirSync(join(options.dataDir,name)))size+=statSync(join(options.dataDir,name,archive)).size;}else {const stat=statSync(join(options.dataDir,name));if(stat.isFile())size+=stat.size;}}return size;}
 function maintain(){const before=Number((db.prepare('SELECT count(*) n FROM connections').get() as {n:number}).n);const cutoff=Date.now()-7*86400000;
  db.prepare('DELETE FROM connections WHERE id IN (SELECT id FROM connections WHERE ended IS NOT NULL AND ended<? ORDER BY ended LIMIT 100)').run(cutoff);
@@ -25,7 +25,8 @@ parentPort!.on('message',({id,op,data})=>{
  try{let result:unknown;
   if(op==='append'){
    const event=data as EvidenceInput;
-   if(usedBytes()+Buffer.byteLength(JSON.stringify(event))+4096>options.maxStorageBytes){maintain();if(usedBytes()+Buffer.byteLength(JSON.stringify(event))+4096>options.maxStorageBytes)throw Error('record storage capacity');}
+   const eventBytes=Buffer.byteLength(JSON.stringify({...event,payload:undefined}))+(event.payload?.byteLength??0)+4096;
+   if(usedBytes()+eventBytes>options.maxStorageBytes){maintain();if(usedBytes()+eventBytes>options.maxStorageBytes)throw Error('record storage capacity');}
    const eventId=randomUUID();let sequence=0;
    db.exec('BEGIN IMMEDIATE');
    try {db.prepare('INSERT OR IGNORE INTO connections(id,world_id,started) VALUES(?,?,?)').run(event.connectionId,event.world.worldId,event.timestampMs);
@@ -36,7 +37,7 @@ parentPort!.on('message',({id,op,data})=>{
     db.exec('COMMIT');
    }catch(error){db.exec('ROLLBACK');throw error;}
    result={eventId,sequence};
-  }else if(op==='read'){const rows=db.prepare('SELECT row_id,id,seq,metadata,payload FROM events WHERE row_id>? ORDER BY row_id LIMIT ?').all(data.after,Math.min(data.limit,1000)) as {row_id:number;id:string;seq:number;metadata:string;payload:Uint8Array|null}[];result=rows.map(r=>({...JSON.parse(r.metadata),rowId:r.row_id,eventId:r.id,sequence:r.seq,payload:r.payload??undefined}));}
+  }else if(op==='read'){const rows=db.prepare('SELECT row_id,id,seq,metadata,payload FROM events WHERE row_id>? ORDER BY row_id LIMIT ?').all(data.after,Math.min(Math.max(data.limit,1),32)) as {row_id:number;id:string;seq:number;metadata:string;payload:Uint8Array|null}[];result=rows.map(r=>({...JSON.parse(r.metadata),rowId:r.row_id,eventId:r.id,sequence:r.seq,payload:r.payload??undefined}));}
   else if(op==='maintain')result=maintain();
   else if(op==='health')result={accepting:usedBytes()<options.maxStorageBytes,usedBytes:usedBytes()};
   else if(op==='close'){db.exec('PRAGMA wal_checkpoint(TRUNCATE)');db.close();result=true;}
