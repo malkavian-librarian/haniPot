@@ -21,7 +21,7 @@ Implement the reviewed OpenClaw v2026.1.29 / protocol-3 foundation before expand
 - Inspect each native command's exit code before continuing. Do not mask a failed test with a later successful command.
 - Check free disk before installation/build. Do not prune unrelated Docker data.
 
-Add implementation build/test commands here when they exist and have been verified. Never invent a passing command or replace a blocked reference gate with guessed fixtures.
+Build and run tests with `npm ci` then `npm test`; start locally with `node dist/src/cli.js serve`. Docker: `docker compose up -d --build --wait`. Never invent a passing command or replace a blocked reference gate with guessed fixtures.
 
 ## Non-negotiable boundaries
 

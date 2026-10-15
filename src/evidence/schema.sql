@@ -9,3 +9,4 @@ INSERT INTO meta SELECT 1 WHERE NOT EXISTS(SELECT 1 FROM meta);
 CREATE TABLE IF NOT EXISTS connections(id TEXT PRIMARY KEY,world_id TEXT NOT NULL,started INTEGER NOT NULL,ended INTEGER);
 CREATE TABLE IF NOT EXISTS events(row_id INTEGER PRIMARY KEY AUTOINCREMENT,id TEXT UNIQUE NOT NULL,connection_id TEXT NOT NULL REFERENCES connections(id) ON DELETE CASCADE,seq INTEGER NOT NULL,ts INTEGER NOT NULL,kind TEXT NOT NULL,metadata TEXT NOT NULL,payload BLOB,UNIQUE(connection_id,seq));
 CREATE INDEX IF NOT EXISTS events_connection ON events(connection_id,seq);
+CREATE INDEX IF NOT EXISTS events_send_related ON events(json_extract(metadata,'$.relatedEventId')) WHERE kind='send_outcome';

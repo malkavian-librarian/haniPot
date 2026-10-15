@@ -1,0 +1,8 @@
+# Public collection requires an independently verified, operator-owned evidence report.
+services:
+  gateway:
+    command: [node,dist/src/cli.js,serve,--data-dir,/data,--public,--deployment-report,/run/readiness.json]
+    volumes:
+      - '${HANIPOT_READINESS_REPORT:?Set path to verified public-readiness report}:/run/readiness.json:ro'
+  ingress:
+    ports: !override ['0.0.0.0:18789:8080']

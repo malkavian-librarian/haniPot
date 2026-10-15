@@ -2,11 +2,11 @@
 
 ## Current status
 
-No honeypot frontend has been implemented yet. The upstream UI built in the isolated reference image is only a compatibility reference.
+A static discovery page is implemented at GET/HEAD `/`, with no scripts or external assets. Other paths return 404. The upstream UI built in the isolated reference image is only a compatibility reference.
 
 ## Foundation surface
 
-The planned public surface is a small self-contained landing page with the historical OpenClaw title and custom-element discovery marker. It is not the full upstream Control UI. Scanner recognition, protocol-subset fidelity and visual realism must be reported separately.
+The current public surface is a small self-contained landing page with the historical OpenClaw title and custom-element discovery marker. It is not the full upstream Control UI. Scanner recognition, protocol-subset fidelity and visual realism must be reported separately.
 
 Do not expose operator evidence, deployment secrets or a genuine administration panel through this page. Use no external assets, analytics, remote scripts or live integrations. Render any synthetic data as escaped text. Never render captured attacker HTML or terminal escape sequences as active content.
 

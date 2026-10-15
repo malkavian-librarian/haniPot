@@ -1,0 +1,11 @@
+.git
+.superpowers
+.worktrees
+node_modules
+dist
+data
+.env*
+artifacts/*
+!artifacts/reference
+artifacts/reference/*
+!artifacts/reference/openclaw-77e703c69b07a236c2f0962bd195e03aae1b8da0

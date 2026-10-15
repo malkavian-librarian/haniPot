@@ -1,0 +1,2 @@
+import {PROFILE_ID} from './contracts.js';
+export function checkReadiness(input:unknown,now=Date.now()):void{const report=input as Record<string,unknown>|null;if(!report||report.profileId!==PROFILE_ID||!Number.isFinite(report.issuedAtMs)||Number(report.issuedAtMs)>now||now-Number(report.issuedAtMs)>3600000||!['firewall','hardQuota','saturation','tls'].every(key=>report[key]===true))throw Error('public deployment evidence is missing, stale or incomplete');}

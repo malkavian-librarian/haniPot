@@ -1,0 +1,10 @@
+.git
+.superpowers
+.worktrees
+node_modules
+dist
+data
+artifacts
+.env
+.env.*
+*.log

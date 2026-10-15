@@ -29,14 +29,14 @@ export async function startGateway(options:{world:Readonly<World>;recorder:Recor
   const release=()=>{clearTimeout(timer);inbound.release(held);held=0;};
   req.on('data',(chunk:Buffer)=>{size+=chunk.length;if(size>16384||!inbound.reserve(chunk.length)){aborted=true;req.destroy();return;}held+=chunk.length;chunks.push(chunk);});
   req.on('error',()=>{});
-  req.on('aborted',()=>{aborted=true;release();void track(record({...base(id,'http','in','body_aborted',req.socket),captureStatus:'prefix_only',observedBytes:size})).catch(()=>{lost++;});});
+  req.on('aborted',()=>{aborted=true;clearTimeout(timer);void track(record({...base(id,'http','in','body_aborted',req.socket),payload:Buffer.concat(chunks),captureStatus:'prefix_only',observedBytes:size})).catch(()=>{lost++;}).finally(release);});
   req.on('end',()=>{void track((async()=>{try{if(aborted)return;await record({...base(id,'http','in','body_complete',req.socket),payload:Buffer.concat(chunks),observedBytes:size,captureStatus:'complete',claimedIdentity:{method:req.method,path:req.url,headers:req.rawHeaders}});
     const status=req.url==='/'&&(req.method==='GET'||req.method==='HEAD')?200:404;
     const content=status===200?landing:Buffer.from('Not Found');const body=req.method==='HEAD'?Buffer.alloc(0):content;
-    await record({...base(id,'http','out','response_prepared',req.socket),payload:body,sendStatus:'prepared'});
+    const prepared=await record({...base(id,'http','out','response_prepared',req.socket),payload:body,sendStatus:'prepared'});
     res.writeHead(status,{'Content-Type':status===200?'text/html; charset=utf-8':'text/plain; charset=utf-8','Content-Length':content.length,'X-Content-Type-Options':'nosniff','Content-Security-Policy':"default-src 'none'; frame-ancestors 'none'"});
     await new Promise<void>((resolve,reject)=>{res.once('error',reject);res.once('close',()=>{if(!res.writableFinished)reject(Error('response aborted'));});res.end(body,resolve);});
-    await record({...base(id,'http','internal','send_outcome',req.socket),sendStatus:'send_callback_success'});await record(base(id,'http','internal','closed',req.socket));
+    await record({...base(id,'http','internal','send_outcome',req.socket),relatedEventId:prepared.eventId,sendStatus:'send_callback_success'});await record(base(id,'http','internal','closed',req.socket));
    }catch{lost++;req.socket.destroy();}finally{release();}})());});
  });
  server.on('upgrade',(req,socket,head)=>{const s=socket as Socket;const state=sockets.get(s);if(!state||closing||req.url!=='/'||!requests.consume()){socket.destroy();return;}
@@ -53,8 +53,8 @@ export async function startGateway(options:{world:Readonly<World>;recorder:Recor
   ws.on('close',()=>{clearTimeout(handshake);clearTimeout(lifetime);clearInterval(idle);clearInterval(tick);for(const buffer of queue)inbound.release(buffer.length);queue.length=0;});
   async function pump(){if(active)return;active=true;try{while(queue.length&&ws.readyState===WebSocket.OPEN){const buffer=queue.shift()!;pendingBytes-=buffer.length;try{
     let frame:Record<string,any>;try{frame=JSON.parse(buffer.toString('utf8'));}catch{await record({...base(state.id,'websocket','in','invalid_frame',req.socket),payload:buffer,parseStatus:'invalid',observations:['invalid_frame']});ws.close(1008,'invalid JSON');continue;}
-    const valid=validateFrame(frame);
-    await record({...base(state.id,'websocket','in','wire_input',req.socket),payload:buffer,captureStatus:'complete',observedBytes:buffer.length,parseStatus:valid.ok?'valid':'invalid',requestId:typeof frame.id==='string'?frame.id:null,method:(METHODS as readonly unknown[]).includes(frame.method)?frame.method:'unknown',rawMethod:typeof frame.method==='string'?frame.method:null});
+    const valid=validateFrame(frame);const fields=frame!==null&&typeof frame==='object'&&!Array.isArray(frame)?frame:{};
+    await record({...base(state.id,'websocket','in','wire_input',req.socket),payload:buffer,captureStatus:'complete',observedBytes:buffer.length,parseStatus:valid.ok?'valid':'invalid',requestId:typeof fields.id==='string'?fields.id:null,method:(METHODS as readonly unknown[]).includes(fields.method)?fields.method:'unknown',rawMethod:typeof fields.method==='string'?fields.method:null});
     if(!valid.ok){ws.close(1008,'invalid request frame');continue;}
     if(ids.has(frame.id)){await send({type:'res',id:frame.id,ok:false,error:{code:'INVALID_REQUEST',message:'duplicate request id'}});ws.close(1008,'duplicate request id');continue;}ids.add(frame.id);
     if(!connected){

@@ -1,0 +1,50 @@
+name: hanipot
+x-logging: &logging
+  driver: json-file
+  options:
+    max-size: 5m
+    max-file: '2'
+services:
+  gateway:
+    image: hanipot:local
+    build: .
+    networks: [sensor]
+    volumes: [evidence:/data]
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    tmpfs: ['/tmp:uid=1000,gid=1000,size=16777216']
+    mem_limit: 256m
+    cpus: 0.5
+    pids_limit: 128
+    logging: *logging
+    healthcheck:
+      test: [CMD,node,-e,"fetch('http://127.0.0.1:18789/').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 10s
+      timeout: 3s
+      retries: 6
+  ingress:
+    image: nginx:1.28.0-alpine@sha256:30f1c0d78e0ad60901648be663a710bdadf19e4c10ac6782c235200619158284
+    user: '101:101'
+    entrypoint: [nginx]
+    command: [-g,'daemon off;']
+    networks: [front,sensor]
+    ports: ['127.0.0.1:18789:8080']
+    volumes: ['./deploy/nginx.conf:/etc/nginx/nginx.conf:ro']
+    depends_on:
+      gateway:
+        condition: service_healthy
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    tmpfs: ['/tmp:uid=101,gid=101,size=16777216']
+    mem_limit: 64m
+    cpus: 0.25
+    pids_limit: 32
+    logging: *logging
+networks:
+  front: {}
+  sensor:
+    internal: true
+volumes:
+  evidence: {}

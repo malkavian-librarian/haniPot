@@ -1,0 +1,14 @@
+import {readFile,writeFile} from 'node:fs/promises';
+import {join} from 'node:path';
+import assert from 'node:assert/strict';
+const directory=process.argv[2];if(!directory)throw Error('Output directory required');
+const xml=await readFile(join(directory,'nmap.xml'),'utf8');
+const httpx=(await readFile(join(directory,'httpx.jsonl'),'utf8')).trim().split(/\r?\n/).filter(Boolean).map(JSON.parse);
+const nuclei=(await readFile(join(directory,'nuclei.jsonl'),'utf8')).trim().split(/\r?\n/).filter(Boolean).map(JSON.parse);
+const gateway=JSON.parse(await readFile(join(directory,'gateway.json'),'utf8'));
+assert.match(xml,/<state state="open"/);assert.match(xml,/OpenClaw Control/);
+assert.ok(httpx.some(row=>row.title==='OpenClaw Control'));
+assert.ok(nuclei.some(row=>row['template-id']==='openclaw-control-detect'));
+assert.equal(gateway.ok,true);assert.equal(gateway.methods.length,8);
+const result={nmap:'open port and title',httpx:'title match',nuclei:'informational signature match',protocol:'historical subset and canonical differential',passed:true};
+await writeFile(join(directory,'verification.json'),JSON.stringify(result,null,2));console.log(JSON.stringify(result));

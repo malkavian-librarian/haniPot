@@ -2,11 +2,11 @@
 
 ## Current status
 
-The sensor is not implemented or cleared for public hosting. The upstream reference is a real historical application used only in an isolated container. Its deliberately fabricated credentials have no external account access.
+The local sensor foundation is implemented. Public hosting remains blocked pending measured firewall, hard-quota, saturation and TLS gates. The upstream reference is a real historical application used only in an isolated container. Its deliberately fabricated credentials have no external account access.
 
 ## Intentional deception
 
-The planned open-control policy allows an apparent operator to enumerate fake agents, sessions and configuration without normal authentication. This is an intentional simulator behaviour and must never grant access to the operator filesystem, Docker daemon, evidence database or real provider keys.
+The open-control policy allows an apparent operator to enumerate fake agents, sessions and configuration without normal authentication. This is an intentional simulator behaviour and must never grant access to the operator filesystem, Docker daemon, evidence database or real provider keys.
 
 The token-gated policy exercises synthetic access controls; it is not full upstream device pairing. config.get requires a distinct admin grant. Fake disclosure and attempted privilege claims are observations, not proof that a real account or host was compromised.
 

@@ -2,13 +2,16 @@ import {parseArgs} from 'node:util';
 import {resolve} from 'node:path';
 import {pathToFileURL} from 'node:url';
 import {once} from 'node:events';
+import {readFile} from 'node:fs/promises';
+import {checkReadiness} from './config.js';
 import {acquireLease,loadOrCreateWorld,reprovisionWorld,recoverLease} from './world/store.js';
 import {openRecorder} from './evidence/recorder.js';
 import {exportSafe,exportRaw} from './operator/export.js';
 import {startGateway} from './gateway/server.js';
 export async function runCli(argv:string[]){
- const command=argv[0];const {values}=parseArgs({args:argv.slice(1),options:{'data-dir':{type:'string',default:'data'},host:{type:'string',default:process.env.HANIPOT_BIND??'127.0.0.1'},port:{type:'string',default:'18789'},policy:{type:'string',default:'open-control'},raw:{type:'boolean'},'acknowledge-stopped':{type:'boolean'}},strict:true});
+ const command=argv[0];const {values}=parseArgs({args:argv.slice(1),options:{'data-dir':{type:'string',default:'data'},host:{type:'string',default:process.env.HANIPOT_BIND??'127.0.0.1'},port:{type:'string',default:'18789'},policy:{type:'string',default:'open-control'},raw:{type:'boolean'},'acknowledge-stopped':{type:'boolean'},public:{type:'boolean'},'deployment-report':{type:'string'}},strict:true});
  if(!['provision','serve','reprovision','export','replay','check','recover'].includes(command))throw Error('unknown command');
+ if(values.public){if(!values['deployment-report'])throw Error('readiness report required');checkReadiness(JSON.parse(await readFile(values['deployment-report'],'utf8')));}
  const dataDir=resolve(values['data-dir']!);const clock={now:Date.now};
  if(command==='recover'){await recoverLease(dataDir,values['acknowledge-stopped']);console.log(JSON.stringify({recovered:true}));return;}
  const lease=await acquireLease(dataDir);

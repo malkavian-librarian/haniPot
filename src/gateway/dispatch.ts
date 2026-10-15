@@ -17,7 +17,7 @@ export function dispatch(method:string,params:unknown,world:Readonly<World>,acce
  const defaults={modelProvider:world.model.split('/')[0],model:world.model.split('/').slice(1).join('/'),contextTokens:128000};
  const recent=world.sessions.slice(0,5).map(s=>({key:s.key,updatedAt:s.updatedAt,age:Math.max(0,now-s.updatedAt)}));
  switch(method as KnownMethod){
-  case 'health': {payload={...structuredClone(reference.results.health.payload),ts:now,durationMs:0,sessions:{path:'/state/agents/main/sessions/sessions.json',count:world.sessions.length,recent}};break;}
+  case 'health': {const health=structuredClone(reference.results.health.payload);const sessions={path:'/state/agents/main/sessions/sessions.json',count:world.sessions.length,recent};payload={...health,ts:now,durationMs:0,sessions,agents:world.agents.map(a=>({...health.agents[0],agentId:a.id,name:a.name,isDefault:a.id==='main',sessions}))};break;}
   case 'system-presence':payload=[{host:world.host,ip:'192.0.2.10',version:'2026.1.29',platform:'linux',deviceFamily:'Linux',modelIdentifier:'x64',mode:'gateway',reason:'self',text:`Gateway: ${world.host}`,ts:now}];break;
   case 'agents.list':payload={defaultId:'main',mainKey:'main',scope:'per-sender',agents:world.agents};break;
   case 'models.list':payload={models:[{id:defaults.model,name:defaults.model,provider:defaults.modelProvider,contextWindow:128000,reasoning:false}]};break;

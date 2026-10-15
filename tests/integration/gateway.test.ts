@@ -25,3 +25,27 @@ test('record failure prevents a successful HTTP response',async()=>{
  const server=await startGateway({world:referenceWorldFromDataset(),recorder,policy:{kind:'open-control'},config:{port:0}});
  try{await assert.rejects(fetch(`http://127.0.0.1:${server.port}/`));}finally{await server.close();}
 });
+
+test('malformed JSON values remain evidence and completed HTTP survives recovery',async()=>{
+ const dir=await mkdtemp(join(tmpdir(),'hanipot-malformed-'));let recorder=await openRecorder({dataDir:dir});
+ const server=await startGateway({world:referenceWorldFromDataset(),recorder,policy:{kind:'open-control'},config:{port:0}});
+ try{
+  await (await fetch(`http://127.0.0.1:${server.port}/`)).text();
+  for(const value of ['null','42','[]','"text"']){
+   const socket=new WebSocket(`ws://127.0.0.1:${server.port}`);
+   await new Promise<void>((resolve,reject)=>{const timer=setTimeout(()=>reject(Error('timeout')),3000);socket.addEventListener('message',()=>socket.send(value),{once:true});socket.addEventListener('close',()=>{clearTimeout(timer);resolve();});});
+  }
+  await server.close();await recorder.close();recorder=await openRecorder({dataDir:dir});
+  const all=[];let cursor=0;while(true){const page=await recorder.readEvents(32,cursor);if(!page.length)break;all.push(...page);cursor=page.at(-1)!.rowId;}
+  for(const value of ['null','42','[]','"text"'])assert.ok(all.some(e=>e.kind==='wire_input'&&Buffer.from(e.payload??[]).toString()===value));
+  const http=all.find(e=>e.transport==='http'&&e.kind==='response_prepared')!;
+  assert.equal(http.sendStatus,'prepared');assert.ok(all.some(e=>e.relatedEventId===http.eventId));
+ }finally{await server.close();await recorder.close();await rm(dir,{recursive:true,force:true});}
+});
+
+test('aborted HTTP preserves admitted body prefix',async()=>{
+ const {connect}=await import('node:net');const dir=await mkdtemp(join(tmpdir(),'hanipot-prefix-'));const recorder=await openRecorder({dataDir:dir});
+ const server=await startGateway({world:referenceWorldFromDataset(),recorder,policy:{kind:'open-control'},config:{port:0}});
+ try{const socket=connect(server.port,'127.0.0.1');await new Promise<void>(r=>socket.once('connect',r));socket.write('POST / HTTP/1.1\r\nHost: localhost\r\nContent-Length: 20000\r\n\r\nretained-prefix');await new Promise(r=>setTimeout(r,50));socket.destroy();await new Promise(r=>setTimeout(r,50));await server.close();const events=await recorder.readEvents();const aborted=events.find(e=>e.kind==='body_aborted');assert.ok(aborted);assert.equal(Buffer.from(aborted.payload!).toString(),'retained-prefix');assert.equal(server.stats().inboundBytes,0);
+ }finally{await server.close();await recorder.close();await rm(dir,{recursive:true,force:true});}
+});

@@ -2,7 +2,7 @@
 
 A stateful AI agent honeypot, starting with a partial historical OpenClaw gateway persona.
 
-**Status:** implementation in progress. The reference acquisition gate is being verified; the public sensor is not ready for deployment. [TODO.md](TODO.md) records completed work and remaining gates.
+**Status:** runnable local foundation. The historical reference, eight-method gateway and local scanner recognition are verified. Public deployment gates remain open. [TODO.md](TODO.md) records completed work and remaining gates.
 
 The goal is to collect attacks against synthetic agents, configuration and sessions without exposing a real agent, host tools or provider credentials. The initial compatibility target is OpenClaw v2026.1.29, protocol 3. It is not a complete OpenClaw implementation or an officially affiliated project.
 
@@ -31,3 +31,15 @@ node --test tests/reference/reference.test.mjs
 Reference containers have no published ports and use a dedicated internal network. Do not expose the real upstream reference gateway publicly. Raw captures and downloaded source stay under ignored `artifacts/`.
 
 MCP, A2A, live OpenRouter responses, Grafana, crawler content and research-lab modules are later pieces, not current features.
+
+## Quick start
+
+```powershell
+npm ci
+npm test
+node dist/src/cli.js serve --data-dir data
+```
+
+Or use `docker compose up -d --build --wait` (loopback port 18789). Stop with `docker compose down`; evidence persists in its volume. See [backend operation](docs/backend.md) for private export, recovery and reprovision commands.
+
+Generate a fresh synthetic installation with the private `reprovision` command while the sensor is stopped. Restarts and container rebuilds preserve an existing world. No OpenRouter key is used in this first piece.
